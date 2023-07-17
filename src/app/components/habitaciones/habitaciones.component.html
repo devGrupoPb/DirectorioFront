@@ -1,0 +1,170 @@
+<body>
+    <div class="container px-5 my-5">
+
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="text-center">
+                    <h2 class="fw-bolder" style="color: white">Conoce a todas las habitaciones</h2>
+                    <p class="pp" style="color: white">Mantente al día y conoce todas las habitaciones disponibles</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Button ir a Eventos y Servicios -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-success me-md-2" type="button" routerLink="/eventos">Visualización de Eventos</button>
+            <!--  <button class="btn btn-success" type="button" routerLink="/servicios">Visualización de Servicios</button> -->
+        </div>
+        <button class="btn btn-success" type="button" routerLink="/servicios">Servicios</button>
+        <!-- Button Agregar Modal -->
+        <button *ngIf="role === 'Gerente'" type="button" class="btn btn-primary mb-2" routerLink="/reservacion">
+            Ver reservaciones
+          </button>
+        <button *ngIf="role === 'Gerente'" type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#agregarHabitacion">
+          Agregar una nueva Habitación
+        </button>
+    
+        <!-- "Cards" Obtener Habitaciones -->
+        <div class="row gx-5">
+    
+            <div class="col-lg-4 mb-5" *ngFor="let hab of habitacionModelGetIdH">
+    
+                <div class="card h-100 shadow border-0">
+                    <img class="card-img-top" src="https://images.e-tsw.com/_lib/vimages/Cancun/Hotels/Hard-Rock-Hotel-Cancun/Gallery/a-Cancun-Hard-Rock-Deluxe-Gold-King-DLXDBLCA.jpg" alt="...">
+                    <div class="card-body p-4">
+                        <div class="badge bg-primary bg-gradient rounded-pill mb-2">{{ hab.numeroHabitacion }}</div>
+                        <h5 class="card-title mb-3">{{ hab.tipoHabitacion }}</h5>
+                        <p class="card-text mb-0">
+                            El número de habitación es {{ hab.numeroHabitacion }}.
+                        </p>
+                        <p class="card-text mb-0">
+                            Su precio es de Q {{ hab.precio }}.00 por día, y se encuentra en el piso {{ hab.numeroPiso }}.
+                        </p>
+                    </div>
+                    <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="d-flex align-items-end justify-content-between">
+                            <button *ngIf="role === 'Gerente'" type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getHabitacionId(hab._id)">Editar</button>
+                            <button *ngIf="role === 'Usuario'" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="getHabitacionId(hab._id)">
+                                Reserva
+                              </button>
+                            <!--<button type="button" class="btn btn-warning" data-bs-toggle="offcanva" data-bs-target="#offcanvaExample" aria-controls="offcanvaExample" (click)="getHabitacionId(hab._id)">Reservar</button>-->
+                            <button *ngIf="role === 'Gerente'" type="button" class="btn btn-danger" (click)="deleteHabitacion(hab._id)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- "Modal" Agregar Habitacion -->
+    <div class="modal fade" id="agregarHabitacion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Habitacion</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+    
+                    <form>
+                        <div class="mg-3">
+                            <label for="inputTipoHabitacion" class="form-label">Tipo de Habitación</label>
+                            <input type="text" id="inputTipoHabitacion" class="form-control" name="tipoHabitacion" #tipo="ngModel" [(ngModel)]="habitacionModelPost.tipoHabitacion">
+                        </div>
+                        <div class="mg-3">
+                            <label for="inputNumHabitacion" class="form-label">Número de Habitación</label>
+                            <input type="text" id="inputNumHabitacion" class="form-control" name="numeroHabitacion" #numeroHabitacion="ngModel" [(ngModel)]="habitacionModelPost.numeroHabitacion">
+                        </div>
+                        <div class=" mg-3 ">
+                            <label for="inputNumPiso " class="form-label ">Número de Piso</label>
+                            <input type="text " id="inputNumPiso " class="form-control " name="numeroPiso" #numeroPiso="ngModel" [(ngModel)]="habitacionModelPost.numeroPiso">
+                        </div>
+                        <div class="mg-3 ">
+                            <label for="inputPrecio " class="form-label ">Precio</label>
+                            <input type="text " id="inputPrecio " class="form-control " name="precio" #precio="ngModel" [(ngModel)]="habitacionModelPost.precio">
+                        </div>
+                    </form>
+    
+                </div>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-secondary " data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button " class="btn btn-primary " data-bs-dismiss="modal" (click)="postHabitaciones()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- "OffCanvas" Agregar Reserva 
+    <div class="offcanva offcanva-start" tabindex="-1" id="offcanvaExample" aria-labelledby="offcanvaExampleLabel">
+        <div class="offcanva-header">
+            <h5 class="offcanva-title" id="offcanvaExampleLabel">Agregar Reserva</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanva" aria-label="Close"></button>
+        </div>
+        <div class="offcanva-body">
+            <form>
+                <div class="mb-3">
+                    <label for="inputnumeroDias" class="form-label">Numero Días</label>
+                    <input type="text" class="form-control" id="inputnumeroDias" name="numeroDias" #numeroDias="ngModel" [(ngModel)]="habitacionModelPost.numeroDias">
+                </div>
+                
+                <button type="submit" class="btn btn-success" (click)="postReservacion()" data-bs-dismiss="offcanvas">Agregar Reservacion</button>
+            </form>
+        </div>
+    </div>-->
+    
+    
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Agregar Reserva</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="numeroDias" class="form-label">Numero Días</label>
+                    <input type="text" class="form-control" id="numeroDias" name="numeroDias" #numeroDias="ngModel" [(ngModel)]="reservacionModelPost.numeroDias">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" (click)="postReservacion()">Reservar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    
+    
+    <!-- "OffCanvas" Editar Habitacion -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Habitación</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form>
+                <div class="mb-3">
+                    <label for="inputTipoHabitacion" class="form-label">Tipo de Habitación</label>
+                    <input type="text" class="form-control" id="inputTipoHabitacion" name="tipoHabitacion" #tipo="ngModel" [(ngModel)]="habitacionModelGetId.tipoHabitacion">
+                </div>
+                <div class="mg-3">
+                    <label for="inputNumHabitacion" class="form-label">Número de Habitación</label>
+                    <input type="text" class="form-control" id="inputNumHabitacion" name="numeroHabitacion" #numeroHabitacion="ngModel" [(ngModel)]="habitacionModelGetId.numeroHabitacion">
+                </div>
+                <div class=" mg-3 ">
+                    <label for="inputNumPiso " class="form-label ">Número de Piso</label>
+                    <input type="text" class="form-control" id="inputNumPiso" name="numeroPiso" #numeroPiso="ngModel" [(ngModel)]="habitacionModelGetId.numeroPiso">
+                </div>
+                <div class="mg-3 ">
+                    <label for="inputPrecio" class="form-label ">Precio</label>
+                    <input type="text" class="form-control" id="inputPrecio" name="precio" #precio="ngModel" [(ngModel)]="habitacionModelGetId.precio">
+                </div>
+    
+                <button type="submit" class="btn btn-success" (click)="putHabitacion()" data-bs-dismiss="offcanvas">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+</body>

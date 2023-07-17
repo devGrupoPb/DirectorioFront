@@ -1,0 +1,43 @@
+<div class="row gx-5 justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="text-center">
+            <h1>Cuenta</h1>
+        </div>
+    </div>
+    <div class="row gx-5 justify-content-center">
+  <div>
+    <div class="text-center">
+    <h2>Carrito</h2>
+  </div>
+  </div>
+  </div>
+  <div class="container px-5 my-5">
+  <table class="container">
+    <thead>
+      <tr>
+        <th><h1>Carrito Habitaciones - Servicio </h1></th>
+        <th><h1> Precio</h1></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let hab of habitacion">
+        <td>Habitación:  {{ hab.numeroHabitacion }}</td>
+        <td>Q.{{ hab.precio }}</td>
+      </tr>
+      <tr *ngFor="let ser of servicios">
+        <td>Servicio:  {{ ser.nombreServicio }}</td>
+        <td>Q.{{ ser.costoServicio }}</td>
+      </tr>
+      <tr>
+        <td>Subtotal:</td>
+        <td>Q.{{carritoModelGet.subTotal}}</td>
+      </tr>
+    </tbody>
+    <tfoot>
+          <td>Somos tu hotel de confianza, HiTel ^-^</td>
+          <td><button class="btn btn-info" routerLink="/" (click)="postFactura()">Pagar</button>
+  
+   </tfoot>
+  
+    </table>
+  

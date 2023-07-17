@@ -1,0 +1,56 @@
+<section class="py-5">
+  <div class="container px-5">
+    <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+      <div class="text-center mb-5">
+        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
+        <h1 class="fw-bolder">RegistrarGerente</h1>
+        <p class="lead fw-normal text-muted mb-0">Registrate en HiTel para obtener acceso completo como usuario y poder
+          empezar a reservar en hoteles!</p>
+      </div>
+      <div class="row gx-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+          <form id="contactForm">
+            <div class="form-floating mb-3">
+              <input class="form-control" id="name" type="text" placeholder="Ingresa tu nombre" name="nombre"
+                #nombre="ngModel" [(ngModel)]="usuarioModelPost.nombre">
+              <label for="name">Nombre</label>
+              <div class="invalid-feedback">A name is required.</div>
+            </div>
+            <div class="form-floating mb-3">
+              <input class="form-control" id="email" type="email" placeholder="name@example.com" name="email"
+                #email="ngModel" [(ngModel)]="usuarioModelPost.email">
+              <label for="email">Correo</label>
+              <div class="invalid-feedback">Se requiere un email</div>
+              <div class="invalid-feedback">Email is not valid.</div>
+            </div>
+
+            <div class="form-floating mb-3">
+              <input class="form-control" id="phone" type="password" placeholder="." name="password" #password="ngModel"
+                [(ngModel)]="usuarioModelPost.password">
+              <label for="phone">Contraseña</label>
+              <div class="invalid-feedback">A phone number is required.</div>
+            </div>
+            <div class="form-floating mb-3">
+              <a routerLink="/sign-in" class="stretched-link">Ya tengo una cuenta en HiTel</a>
+            </div>
+            <div class="d-none" id="submitSuccessMessage">
+              <div class="text-center mb-3">
+                <div class="fw-bolder">Form submission successful!</div>
+                To activate this form, sign up at
+                <br>
+                <a
+                  href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
+              </div>
+            </div>
+            <div class="d-none" id="submitErrorMessage">
+              <div class="text-center text-danger mb-3">Error sending message!</div>
+            </div>
+            <div class="d-grid"><button class="btn btn-primary btn-lg" id="submitButton" type="submit"
+                (click)="postGerente()">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

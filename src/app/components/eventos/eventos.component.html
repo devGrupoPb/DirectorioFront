@@ -1,0 +1,108 @@
+<body>
+    <div class="container px-5 my-5">
+
+        <div class="row gx-5 justify-content-center">
+            <div class="col-lg-8 col-xl-6">
+                <div class="text-center">
+                    <h2 class="fw-bolder" style="color: white">Conoce a todos las eventos</h2>
+                    <p class="lea" style="color: white">Mantente al día y conoce todas los eventos disponibles</p>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Button Regresar a habitaciones -->
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-success me-md-2" type="button" routerLink="/habitaciones">Regresar a habitaciones</button>
+        </div>
+    
+        <!-- Button Agregar "Modal" -->
+        <button *ngIf="role === 'Gerente'" type="button" class="btn btn-primary mb-2" data-bs-toggle="modal" data-bs-target="#agregarEvento">
+           Agregar un nuevo Evento
+        </button>
+    
+        <!-- "Cards" Obtener Eventos -->
+        <div class="row gx-5">
+    
+            <div class="col-lg-4 mb-5" *ngFor="let Even of eventosModelGetIdH">
+                <div class="card h-100 shadow border-0">
+                    <img class="card-img-top" src="https://www.hotel-casablanca.com.mx/cache/db/6f/db6ff21221221e0ad360e107ce0c8308.jpg" alt="...">
+                    <div class="card-body p-4">
+                        <h5 class="card-title mb-3">{{ Even.nombre }}</h5>
+                        <p class="card-text mb-0">
+                            El evento se llevará a cabo el {{ Even.fecha }} a las {{ Even.hora }}.
+                        </p>
+                    </div>
+                    <div *ngIf="role === 'Gerente'" class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="d-flex align-items-end justify-content-between">
+                            <button type="button" class="btn btn-warning" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getEventoId(Even._id)">Editar</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteEvento(Even._id)">Eliminar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    <!-- "Modal" Agregar Evento -->
+    <div class="modal fade" id="agregarEvento" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Agregar Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+    
+                    <form>
+                        <div class="mg-3">
+                            <label for="inputNombre" class="form-label">Nombre Evento</label>
+                            <input type="text" id="inputNombre" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="eventosModelPost.nombre">
+                        </div>
+                        <div class="mg-3">
+                            <label for="inputHora" class="form-label">Horario del Evento</label>
+                            <input type="text" id="inputHora" class="form-control" name="hora" #hora="ngModel" [(ngModel)]="eventosModelPost.hora">
+                        </div>
+                        <div class=" mg-3 ">
+                            <label for="inputFecha" class="form-label ">Fecha de Evento</label>
+                            <input type="text " id="inputFecha" class="form-control " name="fecha" #fecha="ngModel" [(ngModel)]="eventosModelPost.fecha">
+                        </div>
+    
+                    </form>
+    
+                </div>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-secondary " data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button " class="btn btn-primary " data-bs-dismiss="modal" (click)="postEventos()">Agregar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- "OffCanvas" Editar Evento -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Evento</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <form>
+                <div class="mg-3">
+                    <label for="inputNombre" class="form-label">Nombre Evento</label>
+                    <input type="text" id="inputNombre" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="eventosModelGetId.nombre">
+                </div>
+                <div class="mg-3">
+                    <label for="inputHora" class="form-label">Horario del Evento</label>
+                    <input type="text" id="inputHora" class="form-control" name="hora" #hora="ngModel" [(ngModel)]="eventosModelGetId.hora">
+                </div>
+                <div class=" mg-3 ">
+                    <label for="inputFecha" class="form-label ">Fecha de Evento</label>
+                    <input type="text " id="inputFecha" class="form-control " name="fecha" #fecha="ngModel" [(ngModel)]="eventosModelGetId.fecha">
+                </div>
+    
+                <button type="submit" class="btn btn-success" (click)="putEvento()" data-bs-dismiss="offcanvas">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+    
+</body>

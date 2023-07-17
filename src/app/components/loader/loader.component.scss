@@ -1,0 +1,52 @@
+.body{
+    padding-top: 15px;
+    padding-bottom: 505px;
+    background-color:#0D0000;
+    position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+      
+      
+  }
+
+
+
+:host{ 
+    display: block;
+}
+
+.container {
+    .loader{
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        width: 100px;
+        height: 100px;
+        margin: auto;
+        background-image: url(^assets/img/Spinner-1s-200px.gif);
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+.btn {
+    border-color: transparent;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    background-color: #292626;
+    color: #fff;
+    transition: all linear 0.5s;
+  }
+  
+  .btn:hover {
+    background-color: rgb(161, 60, 60);
+  }
+
+  .d-grid{
+    margin-top: 400px;
+  }

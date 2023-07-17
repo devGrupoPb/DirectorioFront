@@ -1,0 +1,58 @@
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand&display=swap");
+
+.asdf{
+  background-color:#ffffff;
+  
+}
+
+.form-control {
+  font-family: "Quicksand", sans-serif;
+}
+
+.form-label {
+  font-family: "Quicksand", sans-serif;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #ffffff;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+    height: 100%;
+  }
+}
+
+.container{
+  background-color: #ffffff;
+  border-radius: 25px;
+  
+}
+
+.btn {
+  border-color: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  background-color: #777474;
+  color: #fff;
+  margin: 3px;
+  transition: all linear 0.5s;
+  
+}
+
+.btn:hover {
+  background-color: rgb(161, 60, 60);
+}
+
+
+
+

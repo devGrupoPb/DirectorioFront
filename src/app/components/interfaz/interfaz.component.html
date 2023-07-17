@@ -1,0 +1,29 @@
+<div class="row gx-5 justify-content-center">
+    <div class="col-lg-8 col-xl-6">
+        <div class="text-center">
+            <h2 class="fw-bolder">Usuarios Registrados</h2>
+            <p class="lead fw-normal text-muted mb-5">Usuarios </p>
+        </div>
+    </div>
+</div>
+
+<div class="row gx-5">
+    <div class="col-lg-4 mb-5" *ngFor="let Us of UsuarioModelGet">
+      <div class="card h-100 shadow border-0">
+        <img class="card-img-top" src="https://dummyimage.com/600x350/ced4da/6c757d" alt="...">
+        <div class="card-body p-4">
+          <div class="badge bg-primary bg-gradient rounded-pill mb-2">Usuario</div>
+          <h5 class="card-title mb-3"></h5>
+          <p class="card-text mb-0">Nombre: {{Us.nombre}} </p>
+          <p class="card-text mb-0">Direccion: {{Us.nombre}}</p>
+          <p class="card-text mb-0">Apellido: {{Us.apellido}} </p>
+          <p class="card-text mb-0">Email: {{Us.email}} </p>
+          <p class="card-text mb-0">Password: {{Us.Password}} </p>
+          <p class="card-text mb-0">Rol: {{Us.rol}} </p>
+        </div>
+        <div class="card-footer p-4 pt-0 bg-transparent border-top-0">
+          <div class="d-flex align-items-end justify-content-between">
+          </div>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+
+.nav-link {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  border-radius: 15px;
+  margin: 5px;
+}
+
+.nav-link:hover {
+  background-color: rgb(72, 72, 72);
+  transition:linear 0.3s
+}
+
+.logo {
+  font-family: 'Kaushan Script', cursive;
+  font-size: 25px;
+  color: azure
+}
+
+.btn {
+  border-color: transparent;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  background-color: #0D0000;
+  color: #fff;
+  margin: 3px;
+  transition: all linear 0.5s;
+}
+
+.btn:hover {
+  background-color: rgb(161, 60, 60);
+}
+
+.nav-link {
+  color: azure;
+}
