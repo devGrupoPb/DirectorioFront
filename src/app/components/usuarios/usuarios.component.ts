@@ -176,7 +176,7 @@ export class UsuariosComponent implements OnInit {
             this.getUsuario();
             Swal.fire(
               'Eliminado',
-              'Se ha eliminado el hotel correctamente',
+              'Se ha eliminado el usuario correctamente',
               'success'
             );
           },

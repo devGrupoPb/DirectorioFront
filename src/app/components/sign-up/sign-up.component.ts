@@ -65,7 +65,7 @@ export class SignUpComponent implements OnInit {
         Swal.fire({
           position: 'top-end',
           icon: 'error',
-          title: error.error.mensaje,
+          title: 'error ingrese los campos validos ',
           showConfirmButton: false,
           timer: 1500,
         });

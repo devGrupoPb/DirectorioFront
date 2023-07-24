@@ -2,9 +2,9 @@
 @import '~bootstrap/scss/functions';
 
 // Sobrescribe las variables de Bootstrap con tus propios colores personalizados
-$primary: #ff0000;
+$primary: #7A0006;
 $secondary: #00ff00;
-
-
+$danger: #7A0006;
+$warning: #F69634;
 // Importa el resto de los archivos SCSS de Bootstrap
 @import '~bootstrap/scss/bootstrap';

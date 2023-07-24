@@ -1,0 +1,5 @@
+$primary-color: #ff0000; // Color primario personalizado
+$secondary-color: #00ff00; // Color secundario personalizado
+
+// Importar Bootstrap después de definir tus colores personalizados
+@import '~bootstrap/scss/bootstrap';
