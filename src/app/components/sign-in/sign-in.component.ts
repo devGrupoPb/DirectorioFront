@@ -30,7 +30,7 @@ export class SignInComponent implements OnInit {
     '',
     '',
     '',
-    '', [{}]);
+    '', );
   }
 
   ngOnInit(): void {}
@@ -53,6 +53,8 @@ export class SignInComponent implements OnInit {
       (response) => {
         this.getTokenPromesa().then((respuesta) => {
           this._router.navigate(['/usuarios']);
+          console.log(response);
+          console.log(respuesta);
         });
 
         const Toast = Swal.mixin({

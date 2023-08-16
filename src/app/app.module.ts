@@ -20,6 +20,10 @@ import { RecargaDirective } from './directivas/recarga.directive';
 import { UsersNombrePipe } from './users-nombre.pipe';
 import { SearchPuestoPipe } from './pipes/search-puesto.pipe';
 import { SearchPaisPipe } from './pipes/search-pais.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +48,10 @@ import { SearchPaisPipe } from './pipes/search-pais.pipe';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
 
   providers: [

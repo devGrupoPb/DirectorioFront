@@ -9,15 +9,15 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class UsuarioService {
-  public url: String = 'https://periwinkle-caiman-hose.cyclic.app/api';
+  public url: String = 'http://localhost:3000/api';
   public headersVariable = new HttpHeaders().set(
     'Content-Type',
     'application/json'
   );
+  private sesionSubject = new BehaviorSubject<any>(null);
+  isAuthenticated = this.sesionSubject.asObservable();
   public token;
   public identidad;
-  public sesionSubject: BehaviorSubject<any>;
-  public isAuthenticated: Observable<any>;
   public roleSubject: BehaviorSubject<any>;
   public roleUpdated: Observable<any>;
 
@@ -63,6 +63,32 @@ export class UsuarioService {
       return res;
     }));
   }
+
+  login1(usuario1, obtenerToken = null): Observable<any> {
+    if (obtenerToken != null) {
+      usuario1.obtenerToken = obtenerToken;
+    }
+
+    let params = JSON.stringify(usuario1);
+
+    return this._http.post(this.url + '/login', params, {
+      headers: this.headersVariable,
+    })
+    .pipe(map((res: any) => {
+      if (obtenerToken) {
+        localStorage.setItem('token', res.token);
+
+        this.sesionSubject.next(res.token);
+      } else {
+        localStorage.setItem('identidad', JSON.stringify(res.usuario));
+
+        this.roleSubject.next(res.usuario.rol);
+      }
+
+      return res;
+    }));
+  }
+
 
   getUserID(idUser):Observable<any>{
     return this._http.get(this.url + '/obtenerUsuarioId/' + idUser, { headers: this.headersVariable });
@@ -126,5 +152,20 @@ export class UsuarioService {
 
     this.sesionSubject.next(null);
     this.roleSubject.next(null);
+    this.sesionSubject.next(false); // Notifica que no está autenticado
+    this.roleSubject.next(null);
+
+  }
+  obtenerUsuarios(page: number, pageSize: number): Observable<any> {
+    let headersToken = this.headersVariable.set('Authorization', this.getToken());
+    const params = {
+      page: page.toString(),
+      pageSize: pageSize.toString()
+    };
+  
+    return this._http.get(this.url + '/obtenerUsuarios', {
+      headers: headersToken,
+      params
+    });
   }
 }

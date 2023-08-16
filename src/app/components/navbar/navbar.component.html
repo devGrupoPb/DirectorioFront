@@ -6,7 +6,7 @@
          
           Directorio</span>
            </a>
-            <button class="navbar-toggler" type="button-warnig" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"><i class="fas fa-bars" style="margin:5px 0px 0px 0px;"></i></span>
   </button>
 
@@ -15,10 +15,8 @@
                     <li class="nav-item active">
                         <a class="nav-link" routerLink="home">Inicio</a>
                     </li>
-                  <li *ngIf="role === 'ADMIN'" class="nav-item">
-                    <a class="nav-link" routerLink="usuarios">Ver Contactos</a>
-                </li>
-                <li *ngIf="role === 'Usuario'" class="nav-item">
+                  
+                <li  class="nav-item">
                   <a class="nav-link" routerLink="usuarios">Ver Contactos</a>
               </li>
                                

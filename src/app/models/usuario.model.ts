@@ -13,8 +13,7 @@ export class Usuario {
     public celular_Corporativo : String,
     public extencion : String,
     public sucursal : String,
-    public pais : String,
-    public factura:[{}],
+    public pais : String
     
   ) {}
 }

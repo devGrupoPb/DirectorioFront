@@ -27,7 +27,7 @@ export class SingUpGerenteComponent implements OnInit {
     '',
     '',
     '',
-    '',[{}]);
+    '',);
   }
 
   ngOnInit(): void {}
