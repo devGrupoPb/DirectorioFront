@@ -13,31 +13,6 @@
       <div class="container" >
 
         <div class="form-group ">
-          <div class="row mt-6">
-            <div class="col-md-12 col-lg-12 mt-2  ">
-              <label for="inputNombre" class="form-label text-white ">Nombre</label>
-              <input [(ngModel)]="searchUsuario" aria-label="Nombre" type="text" class="form-control inputserch"
-                name="searchUsuario" >
-            </div>
-            <div class="col-md-12 col-lg-6 mt-2">
-              <label for="inputNombre" class="form-label   text-white ">Departamento</label>
-              <input [(ngModel)]="searchPuesto" type="text" class="form-control inputserch"
-                name="searchPuesto" >
-                 
-            </div>
-            <div class="col-md-12 col-lg-6 mt-2">
-              <label for="inputNombre" class="form-label text-white ">País</label>
-                <select [(ngModel)]="searchPais" type="text" class="form-control inputserch"
-                name="searchPais">
-                  <option value="Guatemala">Guatemala</option>
-                  <option value="El Salvador">El Salvador</option>
-                  <option value="Nicaragua">Nicaragua</option>
-                  <option value="Honduras">Honduras</option>
-                  <option value="Costa Rica">Costa Rica</option>
-                  <option value="Panama">Panamá</option>
-                </select>
-            </div>
-          </div>
           <div class="row mt-4 ">
             <div class="col my-4" >
               <button  *ngIf="role ==='ADMINP'" type="button" class="btn btn-warning text-white" (clic)="nuevoUsuario" data-bs-toggle="modal" data-bs-target="#exampleModal" >Nuevo Contacto </button>
@@ -61,48 +36,48 @@
 <div class="container mt-5">
       <div class="table-responsive">
         <div class="scrolltable">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <th scope="col">Nombre</th>
-                  <th scope="col">Apellido</th>
-                  <th scope="col">Correo</th>
-                  <th scope="col">Puesto</th>
-                  <th scope="col">Celular Corporativo</th>
-                  <th *ngIf="role === 'ADMINP'"  scope="col">Extensión</th>
-                  <th *ngIf="role === 'USUARIO'" scope="col">Extensión</th>
-          
-                  <th scope="col">Sucursal</th>
-                  <th scope="col">Departamento</th>
-                  <th scope="col">Pais</th>
-                  <th scope="col" *ngIf="role === 'ADMINP'"> Opciones </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr  *ngFor="let us of usuarioModelGet | searchUsuario:searchUsuario | searchPuesto:searchPuesto |  searchPais:searchPais " (click)="SetID(us._id)  " >
-                  
-                  <td>{{us.nombre}}</td>
-                  <td>{{us.apellido}}</td>
-                  <td>{{us.email}}</td>
-                  <td>{{us.puesto}}</td>
-                  <td>{{us.celular_Corporativo}}</td>
-                  <td *ngIf="role === 'ADMIN'" >{{us.extencion}}</td>
-                  <td *ngIf="role === 'USUARIO'" >{{us.extencion}}</td>
-                  <td>{{us.sucursal}}</td>
-                  <td>{{us.departamento}}</td>
-                  <td>{{us.pais}}</td>
-                  <td *ngIf="role === 'ADMINP'">
-                      <div  class="card-footer p-4 pt-0 bg-transparent border-top-0">
-                          <div class="d-flex align-items-end justify-content-between">
-                              <button type="button" class="btn btn-warning text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getUsuarioId(us._id)">Editar</button>
-                              <button type="button" class="btn btn-danger" (click)="deleteUser(us._id)">Eliminar</button>
-                          </div>
-                      </div>
-                  </td>
-                </tr>
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Puesto</th>
+                <th scope="col">Celular Corporativo</th>
+                <th *ngIf="role === 'ADMINP'"  scope="col">Extensión</th>
+                <th *ngIf="role === 'USUARIO'" scope="col">Extensión</th>
+        
+                <th scope="col">Sucursal</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Pais</th>
+                <th scope="col" *ngIf="role === 'ADMINP'"> Opciones </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let us of usuarioModelGet" >
                 
-              </tbody>
-            </table>
+                <td>{{us.nombre}}</td>
+                <td>{{us.apellido}}</td>
+                <td>{{us.email}}</td>
+                <td>{{us.puesto}}</td>
+                <td>{{us.celular_Corporativo}}</td>
+                <td *ngIf="role === 'ADMIN'" >{{us.extencion}}</td>
+                <td *ngIf="role === 'USUARIO'" >{{us.extencion}}</td>
+                <td>{{us.sucursal}}</td>
+                <td>{{us.departamento}}</td>
+                <td>{{us.pais}}</td>
+                <td *ngIf="role === 'ADMINP'">
+                    <div  class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="d-flex align-items-end justify-content-between">
+                            <button type="button" class="btn btn-warning text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getUsuarioId(us._id)">Editar</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteUser(us._id)">Eliminar</button>
+                        </div>
+                    </div>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
         </div>
     </div>
        <!-- "OffCanvas" Editar Evento -->

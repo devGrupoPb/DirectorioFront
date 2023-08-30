@@ -5,15 +5,19 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Title } from '@angular/platform-browser';
 import Swal from 'sweetalert2';
 import { Usuario } from 'src/app/models/usuario.model';
+import { departamento } from 'src/app/models/departamento.model';
+import { password } from 'src/app/models/validator.model';
+import { Validator } from '@angular/forms'; 
 import { Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {  MatSort } from '@angular/material/sort';
 import { FormsModule } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-usuarios',
-  templateUrl: './usuarios.component.html',
+  templateUrl: './usuarios.Component.html',
   styleUrls: ['./usuarios.component.scss'],
   providers: [UsuarioService],
 })
@@ -21,13 +25,18 @@ export class UsuariosComponent implements OnInit {
   
   displayedColumns: string[] = [ 'nombre','apellido','email','usuario','password','puesto','departamento','celular_Corporativo','extencion','sucursal','pais']; // Agrega los nombres de las columnas
   dataSource = new MatTableDataSource<Usuario>(); 
-  public usuarioModelGet: Usuario;
+  public usuarioModelGet: any;
   public imgURL = "https://firebasestorage.googleapis.com/v0/b/imgs-330ed.appspot.com/o/logoGrupooPb.png?alt=media&token=b05fe2e9-9819-4f4e-952d-4514ba77906c"
-  public usuarioModelPost: Usuario;
+  public usuarioModelPost: any ;
   public usuarioModelGetId : Usuario;
   public usuarioModelPUT: Usuario;
+  public postPassword: password;
+  public depatamentoModelGet: any;
   public searchUsuario;
+  public requests: any=[]
+  public postDepartamentos: departamento;
   public searchPuesto;
+  public paises: string[] = ['Costa Rica',' El Salvador','Guatemala','Honduras','Nicaragua',' Panamá'];
   public searchPais;
   public token;
   public identidad;
@@ -40,12 +49,14 @@ export class UsuariosComponent implements OnInit {
   public recargarC =- 0
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor( private titule: Title, public sUsuario: UsuarioService,
+  constructor( private router: Router ,private titule: Title, public sUsuario: UsuarioService,
 
     
     private _router: Router
              ) {
-              
+              this.postPassword = new password('','')
+              this.postDepartamentos = new departamento('','');
+              this.depatamentoModelGet = new departamento('','');
               this.userModel = new Usuario( '',
               '',
               '',
@@ -122,6 +133,7 @@ export class UsuariosComponent implements OnInit {
            
 
   ngOnInit(): void {
+  
     this.getUsuario();
     this.dataSource.paginator = this.paginator; // Configura la paginación
     this.dataSource.sort = this.sort; 
@@ -146,6 +158,7 @@ export class UsuariosComponent implements OnInit {
     this.sUsuario.obtenerUsuario(this.token).subscribe(
       (response) => {
         this.usuarioModelGet = response.usuario;
+        this.usuarioModelGet = Array.of(this.usuarioModelGet)
         console.log(response);
       },
       (err) => {
@@ -153,14 +166,32 @@ export class UsuariosComponent implements OnInit {
       }
     )
   }
+  getDepartamento() {
+    this.sUsuario.obtenerDepartamentos().subscribe(
+      (response) => {
+        this.depatamentoModelGet = response.depto;
+        this.depatamentoModelGet = Array.of(this.depatamentoModelGet)
+        console.log(response);
+        
+      },
+      (err) => {
+        console.log(<any>err)
+      }
+    )
+  }
+  getPaises(){
+    
+  }
   VaciarToken(){
     this.sUsuario.clearToken();
-    this.userModel.password = null;
+   
     Swal.fire({
       icon: 'success',
       title: 'Sesión Cerrada',
       showConfirmButton: false,
       timer: 1500
+    }).then(() => {
+      window.location.reload();
     })
   }
   getUsuarioId(idUser){
@@ -174,9 +205,48 @@ export class UsuariosComponent implements OnInit {
       }
     )
   }
- 
+  postDepartamento() {
+    this.sUsuario.registraDepartamento(this.postDepartamentos).subscribe(
+      (response) => {
+        console.log(response);
+    
+        this.postDepartamentos.nombre = ''
+        
+        this.getDepartamento()
+        Swal.fire({
+          icon: 'success',
+          title: 'Registro completado con exito',
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      },
+      (error) => {
+        Swal.fire({
+          position: 'top-end',
+          icon: 'error',
+          title: error.error.mensaje,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    );
+  }
 
   putUser() {
+    this.sUsuario.editarUsuario(this.usuarioModelGetId).subscribe(
+      (response) => {
+        console.log(response);
+        this.getUsuario();
+      
+      },
+      (error) => {
+        console.log(error);
+        this.getUsuario();
+      
+      }
+    )
+  }
+  put() {
     this.sUsuario.editarUsuario(this.usuarioModelGetId).subscribe(
       (response) => {
         console.log(response);
@@ -222,11 +292,13 @@ export class UsuariosComponent implements OnInit {
           (response) => {
             console.log(response);
             this.getUsuario();
-            Swal.fire(
-              'Eliminado',
-              'Se ha eliminado el usuario correctamente',
-              'success'
+            Swal.fire({
+              icon: 'error',
+              title: response.mensaje,
+            }
+              
             );
+            
           },
           (error) => {
             const Toast = Swal.mixin({
@@ -243,7 +315,7 @@ export class UsuariosComponent implements OnInit {
 
             Toast.fire({
               icon: 'error',
-              title: error.error.mensaje,
+              title: error.mensaje,
             });
           }
         );
@@ -268,11 +340,14 @@ export class UsuariosComponent implements OnInit {
           (response) => {
             console.log(response);
             this.getUsuario();
-            Swal.fire(
-              'Eliminado',
-              'Se ha eliminado el usuario correctamente',
-              'success'
+            Swal.fire({
+              icon: 'success',
+              title: response.mensaje,
+            }
+              
             );
+            const a = response
+            return a
           },
           (error) => {
             const Toast = Swal.mixin({
@@ -359,9 +434,7 @@ export class UsuariosComponent implements OnInit {
     this.sUsuario.login(this.userModel).subscribe(
       (response) => {
         this.getTokenPromesa().then((respuesta) => {
-          this._router.navigate(['/usuarios']);
         });
-
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
@@ -394,7 +467,7 @@ export class UsuariosComponent implements OnInit {
 
         Toast.fire({
           icon: 'error',
-          title: 'correo o contraseña incorrectos ',
+          title: 'Contraseña incorrecta',
         });
       }
     );
