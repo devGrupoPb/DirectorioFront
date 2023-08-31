@@ -1,115 +1,141 @@
-<br><br>
-<br>
-<div class="container">
-<h3>Lista</h3>
-<br>
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <input [(ngModel)]="searchUsuario" type="text" class="form-control inputserch primary" name="searchUsuario" placeholder="Buscar por Nombre" type="search">
-                <br>
-                <input [(ngModel)]="searchPuesto" type="text" class="form-control inputserch" name="searchPuesto" placeholder="Buscar por Departamento" type="search">
-                <br>
-                <input [(ngModel)]="searchPais" type="text" class="form-control inputserch" name="searchPais" placeholder="Buscar por Pais" type="search">
-                <br>
+<div class="container-fluid mt-5  ">
+  <div class="row">
+    <div class="col-md-5 d-flex align-items-center justify-content-center">
+      <img [src]="imgURL" alt="img" class="img max-width-100 my-3" style="max-width: 150px;" >
+    </div>
+    <div class="col-md-2 align-self-center">
+      <h1 class="text-center" >Directorio Grupo PB</h1>
+    </div>
+  </div>
+</div>
+
+    <div class="container-fluid text-center bg-primary justify-content-center align-items-center" style="min-height: 250px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+      <div class="container" >
+
+        <div class="form-group ">
+          <div class="row mt-4 ">
+            <div class="col my-4" >
+              <button  *ngIf="role ==='ADMINP'" type="button" class="btn btn-warning text-white" (clic)="nuevoUsuario" data-bs-toggle="modal" data-bs-target="#exampleModal" >Nuevo Contacto </button>
+            </div>
+            <div class="col my-4 " >
+              <button  *ngIf="!isAuthenticated" type="button" class="btn btn-warning text-white " (clic)="login" data-bs-toggle="modal" data-bs-target="#exampleModa2" > Ver más </button>
+
+            </div>
+            <div class="col my-4 " >
+              <button *ngIf="isAuthenticated" class="btn btn-warning text-white" routerLink="sign-in" (click)="VaciarToken()">Cerrar Sesión</button>            
+
+            </div>
+  
+          </div>
+      </div>
+      
+
+      </div>
+    </div>
+
+<div class="container mt-5">
+      <div class="table-responsive">
+        <div class="scrolltable">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apellido</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Puesto</th>
+                <th scope="col">Celular Corporativo</th>
+                <th *ngIf="role === 'ADMINP'"  scope="col">Extensión</th>
+                <th *ngIf="role === 'USUARIO'" scope="col">Extensión</th>
+        
+                <th scope="col">Sucursal</th>
+                <th scope="col">Departamento</th>
+                <th scope="col">Pais</th>
+                <th scope="col" *ngIf="role === 'ADMINP'"> Opciones </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr  *ngFor="let us of usuarioModelGet" >
+                
+                <td>{{us.nombre}}</td>
+                <td>{{us.apellido}}</td>
+                <td>{{us.email}}</td>
+                <td>{{us.puesto}}</td>
+                <td>{{us.celular_Corporativo}}</td>
+                <td *ngIf="role === 'ADMIN'" >{{us.extencion}}</td>
+                <td *ngIf="role === 'USUARIO'" >{{us.extencion}}</td>
+                <td>{{us.sucursal}}</td>
+                <td>{{us.departamento}}</td>
+                <td>{{us.pais}}</td>
+                <td *ngIf="role === 'ADMINP'">
+                    <div  class="card-footer p-4 pt-0 bg-transparent border-top-0">
+                        <div class="d-flex align-items-end justify-content-between">
+                            <button type="button" class="btn btn-warning text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getUsuarioId(us._id)">Editar</button>
+                            <button type="button" class="btn btn-danger" (click)="deleteUser(us._id)">Eliminar</button>
+                        </div>
+                    </div>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+        </div>
+    </div>
+       <!-- "OffCanvas" Editar Evento -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Contacto</h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <form>
+                    <div class="mg-3">
+                        <label for="inputNombre" class="form-label">Nombre </label>
+                        <input type="text" id="inputNombre" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioModelGetId.nombre">
+                    </div>
+                    <div class="mg-3">
+                        <label for="inputHora" class="form-label">Apellido</label>
+                        <input type="text" id="inputHora" class="form-control" name="apellido" #apellido="ngModel" [(ngModel)]="usuarioModelGetId.apellido">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Correo</label>
+                        <input type="text " id="inputCorreo" class="form-control " name="email" #email="ngModel" [(ngModel)]="usuarioModelGetId.email">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Extensión</label>
+                        <input type="text " id="inputExtencion" class="form-control " name="extencion" #extencion="ngModel" [(ngModel)]="usuarioModelGetId.extencion">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Pais</label>
+                        <input type="text " id="inputPais" class="form-control " name="pais" #pais="ngModel" [(ngModel)]="usuarioModelGetId.pais">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Puesto</label>
+                        <input type="text " id="inputPuesto" class="form-control " name="puesto" #puesto="ngModel" [(ngModel)]="usuarioModelGetId.puesto">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Departamento</label>
+                        <input type="text " id="inputDepartamento" class="form-control " name="departamento" #departamento="ngModel" [(ngModel)]="usuarioModelGetId.departamento">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Celular Corporativo</label>
+                        <input type="text " id="inputCelular" class="form-control " name="celular_Corporativo" #celular_Corporativo="ngModel" [(ngModel)]="usuarioModelGetId.celular_Corporativo">
+                    </div>
+                    <div class=" mg-3 ">
+                        <label for="inputFecha" class="form-label ">Sucursal</label>
+                        <input type="text " id="inputSucursal" class="form-control " name="sucursal" #sucursal="ngModel" [(ngModel)]="usuarioModelGetId.sucursal">
+                    </div>
+        
+                    <button *appRecarga="" type="submit" class="btn btn-warning text-white" (click)="putUser()"  data-bs-dismiss="offcanvas">Guardar Cambios</button>
+                </form>
             </div>
         </div>
     </div>
-    <button  *ngIf="role ==='ADMIN'" type="button" class="btn btn-primary" (clic)="nuevoUsuario" data-bs-toggle="modal" data-bs-target="#exampleModal" >Nuevo Contacto </button>
-<br><br>
-</div>
-<table class="table table-hover" >
-	<thead>
-	  <tr>
-		<th scope="col">#</th>
-		<th scope="col">Nombre</th>
-		<th scope="col">Apellido</th>
-		<th scope="col">Correo</th>
-		<th scope="col">Puesto</th>
-		<th scope="col">Celular Corporativo</th>
-		<th scope="col">Extensión</th>
-		<th scope="col">Sucursal</th>
-		<th scope="col">Departamento</th>
-		<th scope="col">Pais</th>
-		<th scope="col" *ngIf="role === 'ADMIN'"> Opciones </th>
-	  </tr>
-	</thead>
-	<tbody>
-	  <tr  *ngFor="let us of usuarioModelGet | searchUsuario:searchUsuario | searchPuesto:searchPuesto |  searchPais:searchPais " (click)="SetID(us._id)  " >
-		<th scope="row"></th>
-		<td>{{us.nombre}}</td>
-		<td>{{us.apellido}}</td>
-		<td>{{us.email}}</td>
-		<td>{{us.puesto}}</td>
-		<td>{{us.celular_Corporativo}}</td>
-		<td>{{us.extencion}}</td>
-		<td>{{us.sucursal}}</td>
-		<td>{{us.departamento}}</td>
-		<td>{{us.pais}}</td>
-		<td *ngIf="role === 'ADMIN'">
-			<div  class="card-footer p-4 pt-0 bg-transparent border-top-0">
-				<div class="d-flex align-items-end justify-content-between">
-					<button type="button" class="btn btn-warning text-white" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample" (click)="getUsuarioId(us._id)">Editar</button>
-					<button type="button" class="btn btn-danger" (click)="deleteUser(us._id)">Eliminar</button>
-				</div>
-			</div>
-		</td>
-	  </tr>
-	  
-	</tbody>
-  </table>
 
-   <!-- "OffCanvas" Editar Evento -->
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasExampleLabel">Editar Contacto</h5>
-            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <form>
-                <div class="mg-3">
-                    <label for="inputNombre" class="form-label">Nombre </label>
-                    <input type="text" id="inputNombre" class="form-control" name="nombre" #nombre="ngModel" [(ngModel)]="usuarioModelGetId.nombre">
-                </div>
-                <div class="mg-3">
-                    <label for="inputHora" class="form-label">Apellido</label>
-                    <input type="text" id="inputHora" class="form-control" name="apellido" #apellido="ngModel" [(ngModel)]="usuarioModelGetId.apellido">
-                </div>
-                <div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Correo</label>
-                    <input type="text " id="inputCorreo" class="form-control " name="email" #email="ngModel" [(ngModel)]="usuarioModelGetId.email">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Extensión</label>
-                    <input type="text " id="inputExtencion" class="form-control " name="extencion" #extencion="ngModel" [(ngModel)]="usuarioModelGetId.extencion">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Pais</label>
-                    <input type="text " id="inputPais" class="form-control " name="pais" #pais="ngModel" [(ngModel)]="usuarioModelGetId.pais">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Puesto</label>
-                    <input type="text " id="inputPuesto" class="form-control " name="puesto" #puesto="ngModel" [(ngModel)]="usuarioModelGetId.puesto">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Departamento</label>
-                    <input type="text " id="inputDepartamento" class="form-control " name="departamento" #departamento="ngModel" [(ngModel)]="usuarioModelGetId.departamento">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Celular Corporativo</label>
-                    <input type="text " id="inputCelular" class="form-control " name="celular_Corporativo" #celular_Corporativo="ngModel" [(ngModel)]="usuarioModelGetId.celular_Corporativo">
-                </div>
-				<div class=" mg-3 ">
-                    <label for="inputFecha" class="form-label ">Sucursal</label>
-                    <input type="text " id="inputSucursal" class="form-control " name="sucursal" #sucursal="ngModel" [(ngModel)]="usuarioModelGetId.sucursal">
-                </div>
-    
-                <button *appRecarga="" type="submit" class="btn btn-success" (click)="putUser()"  data-bs-dismiss="offcanvas">Guardar Cambios</button>
-            </form>
-        </div>
-    </div>
-</div>
+
+
+
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -185,11 +211,44 @@
             <div class="modal-footer">
                 <br>
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success" (click)="postUser()" data-bs-dismiss="modal">Guardar cambios</button>
+                <button type="button" class="btn btn-warning text-white" (click)="postUser()" data-bs-dismiss="modal">Guardar cambios</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+
+<div class="modal fade" id="exampleModa2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-center" id="exampleModalLabel">Ingrese la contras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" novalidate >
+                      <!-- Password input -->
+                      <div class="form-outline mb-3">
+                        <label class="form-label" for="form3Example4">Contraseña</label>
+                        <input type="password" id="form3Example4" class="form-control form-control-lg" placeholder=""
+                          name="password" #password="ngModel" [(ngModel)]="userModel.password" />
+                        
+                      </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <br>
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-warning text-white" (click)="login()" data-bs-dismiss="modal">inicar Sesion</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script>
     (function () {
   'use strict'
@@ -209,5 +268,5 @@
         form.classList.add('was-validated')
       }, false)
     })
-})()
+  })()
 </script>

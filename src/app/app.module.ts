@@ -3,13 +3,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { SignInComponent } from './components/sign-in/sign-in.component';
-import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { HomeComponent } from './components/home/home.component';
+
+
+
 import { FormsModule } from '@angular/forms';
 import { SearchHotelPipe } from './pipes/search-hotel.pipe';
-import { SingUpGerenteComponent } from './components/sing-up-gerente/sing-up-gerente.component';
+
 import { ChartsModule } from '@rinminase/ng-charts';
 import { UsuarioService } from './services/usuario.service';
 import { AuthTokenInterceptor } from './auth-token.interceptor';
@@ -20,16 +19,15 @@ import { RecargaDirective } from './directivas/recarga.directive';
 import { UsersNombrePipe } from './users-nombre.pipe';
 import { SearchPuestoPipe } from './pipes/search-puesto.pipe';
 import { SearchPaisPipe } from './pipes/search-pais.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    SignInComponent,
-    SignUpComponent,
-    HomeComponent,
     SearchHotelPipe,
-    SingUpGerenteComponent,
     UsuariosComponent,
     FiltroPipe,
     SearchUsuarioPipe,
@@ -44,7 +42,10 @@ import { SearchPaisPipe } from './pipes/search-pais.pipe';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ChartsModule
+    ChartsModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
 
   providers: [

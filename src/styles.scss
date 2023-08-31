@@ -8,3 +8,6 @@ $secondary: #00ff00;
 
 // Importa el resto de los archivos SCSS de Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
