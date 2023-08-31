@@ -155,11 +155,11 @@ export class UsuariosComponent implements OnInit {
   }
 
   getUsuario() {
-    this.sUsuario.obtenerUsuario(this.token).subscribe(
+    this.sUsuario.obtenerUsuario().subscribe(
       (response) => {
         this.usuarioModelGet = response.usuario;
-        this.usuarioModelGet = Array.of(this.usuarioModelGet)
-        console.log(response);
+        this.usuarioModelGet = (this.usuarioModelGet)
+        console.log(this.usuarioModelGet);
       },
       (err) => {
         console.log(<any>err)

@@ -34,10 +34,8 @@ export class UsuarioService {
     this.roleUpdated = this.roleSubject.asObservable();
   }
 
-  obtenerUsuario(token): Observable<any> {
-    let headersToken = this.headersVariable.set('Authorization', token);
+  obtenerUsuario(): Observable<any> {
     return this._http.get(this.url + '/obtenerUsuarios', {
-      headers: this.headersVariable,
     });
   }
 
